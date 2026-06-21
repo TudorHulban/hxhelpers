@@ -27,6 +27,7 @@ func TestTernaryLazy(t *testing.T) {
 					result,
 				)
 			}
+
 			if !value1Called {
 				t.Error(
 					"expected value1 to be executed, but it was not",
@@ -51,6 +52,7 @@ func TestTernaryLazy(t *testing.T) {
 			if result != "fallback" {
 				t.Errorf("expected 'fallback', got %q", result)
 			}
+
 			if !value2Called {
 				t.Error("expected value2 to be executed, but it wasn't")
 			}
