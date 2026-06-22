@@ -6,27 +6,27 @@ import (
 	"github.com/tudorhulban/hxerrors"
 )
 
-func ValidatePiers(piers any) error {
+func ValidateDependencies(dependencies any) error {
 	// 1. Safe guard against a completely untyped nil
-	if piers == nil {
+	if dependencies == nil {
 		return hxerrors.ErrValidation{
-			Caller: "ValidatePiers",
+			Caller: "ValidateDependencies",
 			Issue: hxerrors.ErrNilInput{
-				InputName: "piers",
+				InputName: "dependencies",
 			},
 		}
 	}
 
-	piersType := reflect.TypeOf(piers)
-	piersValue := reflect.ValueOf(piers)
+	piersType := reflect.TypeOf(dependencies)
+	piersValue := reflect.ValueOf(dependencies)
 
 	// 2. Loop to handle nested pointers (e.g., **MyStruct) and handle typed nils safely
 	for piersType.Kind() == reflect.Ptr {
 		if piersValue.IsNil() {
 			return hxerrors.ErrValidation{
-				Caller: "ValidatePiers",
+				Caller: "ValidateDependencies",
 				Issue: hxerrors.ErrNilInput{
-					InputName: "piers",
+					InputName: "dependencies",
 				},
 			}
 		}
@@ -51,7 +51,7 @@ func ValidatePiers(piers any) error {
 			case reflect.Ptr, reflect.Interface:
 				if fieldValue.IsNil() {
 					return hxerrors.ErrValidation{
-						Caller: "ValidatePiers",
+						Caller: "ValidateDependencies",
 						Issue: hxerrors.ErrNilInput{
 							InputName: field.Name,
 						},
@@ -65,9 +65,9 @@ func ValidatePiers(piers any) error {
 
 	default:
 		return hxerrors.ErrValidation{
-			Caller: "ValidatePiers",
+			Caller: "ValidateDependencies",
 			Issue: hxerrors.ErrInvalidInput{
-				InputName: "piers",
+				InputName: "dependencies",
 			},
 		}
 	}

@@ -15,7 +15,7 @@ func TestErrorsValidatePiers(t *testing.T) {
 
 	object := &Object{}
 
-	require.Error(t, ValidatePiers(object))
+	require.Error(t, ValidateDependencies(object))
 }
 
 type structValid struct {
@@ -104,7 +104,7 @@ func TestValidatePiers(t *testing.T) {
 		t.Run(
 			tc.description,
 			func(t *testing.T) {
-				errValidate := ValidatePiers(tc.in)
+				errValidate := ValidateDependencies(tc.in)
 
 				switch {
 				case tc.want == nil && errValidate != nil:
