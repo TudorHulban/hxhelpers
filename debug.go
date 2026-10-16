@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// Use as defer helpers.TraceExit().
+// Use as defer hxhelpers.TraceExit().
 func TraceExit() {
 	pc, _, line, ok := runtime.Caller(1) // Get the caller of this function
 	if ok {
@@ -19,7 +19,21 @@ func TraceExit() {
 	}
 }
 
-// Use as defer helpers.TraceExitSince(...).
+// Use as defer hxhelpers.TraceExitTime().
+func TraceExitTime(now time.Time) {
+	pc, _, line, ok := runtime.Caller(1) // Get the caller of this function
+	if ok {
+		fmt.Printf(
+			"exiting function %s at line %d after %d micro-seconds.\n",
+
+			runtime.FuncForPC(pc).Name(),
+			line,
+			time.Since(now).Microseconds(),
+		)
+	}
+}
+
+// Use as defer hxhelpers.TraceExitSince(...).
 func TraceExitSince(traceNo int, sectionName string, now time.Time) {
 	pc, _, line, couldGetCaller := runtime.Caller(1)
 	if couldGetCaller {
